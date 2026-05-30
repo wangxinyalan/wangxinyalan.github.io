@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第九周：学习PCB板设计（嘉立创EDA）</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f7fa;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #2ecc71;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2ecc71;
+            margin-top: 35px;
+            border-left: 5px solid #2ecc71;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2ecc71;
+            text-decoration: none;
+            background: #e8f5e9;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .back-link:hover {
+            background: #2ecc71;
+            color: white;
+        }
+        .step-box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #2ecc71;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+        .tip-box {
+            background-color: #e8f5e9;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #2ecc71;
+            border-radius: 8px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        em {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回主页</a>
+
+    <h1>🔌 第九周：学习PCB板设计（嘉立创EDA）</h1>
+    <p>本周我们学习了如何使用嘉立创EDA进行PCB电路板设计，从原理图绘制到PCB布局布线，最终完成了西南交通大学130周年校庆纪念PCB板的设计！</p>
+
+    <!-- 什么是PCB -->
+    <div class="step-box">
+        <h2>📖 一、什么是PCB？</h2>
+        <p>PCB（Printed Circuit Board，印刷电路板）是电子元器件的支撑体和电气连接的载体。简单来说，就是把我们之前在面包板上用跳线搭建的电路，通过设计变成一块可以批量生产、稳定可靠的电路板。</p>
+        <div class="tip-box">
+            💡 <strong>为什么要学习PCB设计？</strong>
+            <ul>
+                <li>❌ 面包板：适合实验验证，但连接不稳定，容易接触不良</li>
+                <li>✅ PCB板：焊接牢固、美观整洁、可批量生产、抗干扰能力强</li>
+            </ul>
+            <p>从面包板到PCB，是将创意转化为实物的关键一步！</p>
+        </div>
+    </div>
+
+    <!-- 认识嘉立创EDA -->
+    <div class="step-box">
+        <h2>🖥️ 二、认识嘉立创EDA</h2>
+        <p>嘉立创EDA是一款国产的、免费的、易上手的PCB设计软件，最大的优势是：</p>
+        <ul>
+            <li><strong>元件库丰富</strong>：百万级在线元件库，大部分常用元件可以直接搜索使用</li>
+            <li><strong>云端同步</strong>：在线设计，随时随地访问项目</li>
+            <li><strong>免费打样</strong>：每月两次免费打样机会（10cm×10cm以内）</li>
+            <li><strong>中文界面</strong>：对新手非常友好</li>
+        </ul>
+    </div>
+
+    <!-- PCB设计流程 -->
+    <div class="step-box">
+        <h2>📋 三、PCB设计基本流程</h2>
+        <p>一块PCB板的设计通常包含以下几个步骤：[citation:1][citation:4]</p>
+        <ol>
+            <li><strong>创建工程</strong>：在嘉立创EDA中新建项目</li>
+            <li><strong>绘制原理图</strong>：放置元件，连接电路</li>
+            <li><strong>原理图转PCB</strong>：生成PCB文件，元件带飞线出现</li>
+            <li><strong>PCB布局</strong>：将元件按照功能模块排列整齐</li>
+            <li><strong>PCB布线</strong>：根据飞线指引，连接导线</li>
+            <li><strong>覆铜与DRC检查</strong>：添加地线覆铜，检查设计规则</li>
+            <li><strong>导出Gerber文件</strong>：送去工厂打样</li>
+        </ol>
+    </div>
+
+    <!-- 课程实践：老师带领设计原理图 -->
+    <div class="step-box">
+        <h2>📐 四、课程实践：跟随老师设计原理图</h2>
+        <p>在课堂上，老师带领我们一步一步完成了原理图的设计。原理图是电路板的"设计蓝图"，它用符号表示电子元器件，用连线表示它们之间的电气连接关系。[citation:1]</p>
+        
+        <p><strong>操作步骤回顾：</strong></p>
+        <ul>
+            <li>打开嘉立创EDA专业版，创建新工程</li>
+            <li>从元件库中搜索并放置所需元件</li>
+            <li>使用导线和网络标签连接各个元件</li>
+            <li>按功能模块划分电路，添加文本说明</li>
+            <li>运行DRC检查，确保电路连接正确</li>
+        </ul>
+
+        <p><strong>📷 原理图设计（课程中老师带领设计的原理图）：</strong></p>
+        <img src="images/schematic-design.jpg" alt="原理图设计" width="600">
+        <p><em>图1：课程中设计的原理图</em></p>
+        
+        <div class="tip-box">
+            💡 <strong>小技巧：</strong> 在原理图设计时，按模块划分电路（电源模块、主控模块、接口模块等），并用矩形框和文字标注，这样后续PCB布局会清晰很多！[citation:4]
+        </div>
+    </div>
+
+    <!-- 西南交大130周年校庆PCB板 -->
+    <div class="step-box">
+        <h2>🎓 五、西南交通大学130周年校庆PCB板</h2>
+        <p>在掌握了基本原理图设计后，我们开始设计一个特别的纪念项目——<strong>西南交通大学130周年校庆纪念PCB板</strong>！</p>
+        
+        <p><strong>设计思路：</strong></p>
+        <ul>
+            <li>板子上包含交大130周年校庆元素（校徽、130字样、校训等）</li>
+            <li>电路实现简单的灯光效果或显示功能</li>
+            <li>可以作为纪念品收藏或展示</li>
+        </ul>
+        
+        <p><strong>设计过程：</strong></p>
+        <ul>
+            <li>确定PCB板尺寸（10cm×10cm以内，享受免费打样）[citation:4]</li>
+            <li>绘制边框，添加安装孔（M3螺丝孔）</li>
+            <li>布局：将LED灯、电阻、主控芯片等按设计要求摆放</li>
+            <li>布线：按照信号流向连接导线，电源线加宽</li>
+            <li>添加丝印：在PCB上添加交大校徽、130周年字样</li>
+            <li>覆铜：在空白区域铺铜，连接到GND</li>
+        </ul>
+
+        <p><strong>📷 西南交大130周年校庆PCB板设计图：</strong></p>
+        <img src="images/jiaoda-pcb.jpg" alt="西南交大130周年校庆PCB板" width="600">
+        <p><em>图2：西南交通大学130周年校庆纪念PCB板设计</em></p>
+    </div>
+
+    <!-- PCB布局布线要点 -->
+    <div class="step-box">
+        <h2>⚡ 六、PCB布局布线要点</h2>
+        <p>通过本次实践，我总结了一些PCB设计的核心要点：[citation:1][citation:8]</p>
+        
+        <h3>📌 布局原则</h3>
+        <ul>
+            <li><strong>信号流向</strong>：按信号从左到右或从输入到输出的方向布局</li>
+            <li><strong>模块化</strong>：相同功能的元件放在一起</li>
+            <li><strong>模拟/数字分开</strong>：模拟电路和数字电路在物理上分离</li>
+            <li><strong>接口靠边</strong>：电源接口、排针等放在板子边缘</li>
+            <li><strong>滤波电容靠近芯片</strong>：0.1μF去耦电容尽量靠近IC的电源引脚</li>
+        </ul>
+        
+        <h3>📌 布线技巧</h3>
+        <ul>
+            <li><strong>先布电源线，再布信号线</strong>：电源线通常需要更宽（20-25mil）</li>
+            <li><strong>转角用135°钝角或圆弧</strong>：避免直角，减少信号反射</li>
+            <li><strong>顶层横着走，底层竖着走</strong>：减少平行长距离走线</li>
+            <li><strong>晶振下方不走线</strong>：防止干扰</li>
+            <li><strong>走线完成后添加泪滴</strong>：加强焊盘与走线的连接</li>
+        </ul>
+        
+        <div class="code-block">
+// 布线参数参考
+信号线宽度：10-12mil
+电源线宽度：20-25mil
+过孔孔径：0.6mm
+过孔焊盘：1.2mm
+安全间距：0.3mm（信号线之间）
+        </div>
+    </div>
+
+    <!-- DRC检查与生成文件 -->
+    <div class="step-box">
+        <h2>✅ 七、DRC检查与文件输出</h2>
+        <p>完成所有布线后，需要进行<strong>设计规则检查（DRC）</strong>，这是确保PCB设计正确性的最后一步。[citation:4]</p>
+        <ul>
+            <li>点击菜单栏的「检查DRC」，软件会自动检测所有错误</li>
+            <li>常见错误：未连接的网络、间距违规、未布通的飞线</li>
+            <li>逐一修复错误，直到DRC显示无报错</li>
+        </ul>
+        <p>检查无误后，就可以<strong>导出Gerber文件</strong>，发给PCB工厂进行打样了！通常一周左右就能收到自己设计的电路板。[citation:8]</p>
+        <div class="highlight">
+            🎉 当你收到自己设计的第一块PCB板，把元件一个个焊上去，通电测试成功的那一刻，满满的成就感！
+        </div>
+    </div>
+
+    <!-- 本周总结 -->
+    <div class="step-box">
+        <h2>📝 八、本周学习总结</h2>
+        <ul>
+            <li>✅ 了解了PCB的基本概念和设计流程</li>
+            <li>✅ 掌握了嘉立创EDA专业版的基本操作</li>
+            <li>✅ 学会了原理图的绘制方法</li>
+            <li>✅ 完成了西南交通大学130周年校庆纪念PCB板的设计</li>
+            <li>✅ 了解了PCB布局布线的基本原则</li>
+            <li>✅ 为后续自主设计更复杂的电路板打下了基础</li>
+        </ul>
+        <p>从面包板到PCB，从飞线到专业电路板，这是电子设计工程师成长的重要一步。期待收到打样的PCB实物！</p>
+    </div>
+
+    <p style="margin-top: 30px;"><a href="index.html" style="background:#2ecc71; color:white; padding:10px 20px; border-radius:25px; text-decoration:none;">← 返回主页</a></p>
+</body>
+</html>

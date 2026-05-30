@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第五周：嵌入式计算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f0f7ff;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2, h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        h2 {
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            background: #e8f2fc;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .back-link:hover {
+            background: #3498db;
+            color: white;
+        }
+        .step-box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .tip-box {
+            background: #e8f2fc;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回主页</a>
+    <h1>💻 第五周：初步认识嵌入式计算</h1>
+    <div class="step-box">
+        <h2>📥 步骤1：下载Arduino IDE及安装ESP32支持包</h2>
+        <h3>1. 下载Arduino IDE</h3>
+        <p>访问Arduino官网（<a href="https://www.arduino.cc/en/software" target="_blank">https://www.arduino.cc/en/software</a>），下载适合你操作系统的安装包。</p>
+        <ul><li>Windows用户：下载.exe安装程序</li><li>Mac用户：下载.dmg文件</li><li>Linux用户：根据发行版选择对应版本</li></ul>
+        <h3>2. 安装Arduino IDE</h3>
+        <p>双击安装包，按照提示完成安装。建议选择默认安装路径。</p>
+        <h3>3. 安装ESP32开发板支持包</h3>
+        <p>打开Arduino IDE，按以下步骤操作：</p>
+        <ol><li>点击菜单栏 <strong>「文件」→「首选项」</strong></li><li>在「附加开发板管理器网址」中添加：<br><code>https://espressif.github.io/arduino-esp32/package_esp32_index.json</code></li><li>点击「确定」保存</li><li>点击菜单栏 <strong>「工具」→「开发板」→「开发板管理器」</strong></li><li>在搜索框中输入 <strong>ESP32</strong></li><li>找到 <strong>ESP32 by Espressif Systems</strong>，点击「安装」</li><li>等待安装完成（可能需要几分钟）</li></ol>
+        <h2>🎮 步骤2：熟悉Arduino IDE基本操作</h2>
+        <h3>界面介绍</h3>
+        <ul><li><strong>工具栏</strong>：包含验证（✓）、上传（→）、新建、打开、保存等按钮</li><li><strong>代码编辑区</strong>：编写和修改程序代码的区域</li><li><strong>控制台/输出区</strong>：显示编译和上传过程中的信息，以及串口监视器输出</li></ul>
+        <h3>常用操作</h3>
+        <ul><li><strong>验证/编译</strong>（✓）：检查代码是否有语法错误</li><li><strong>上传</strong>（→）：将代码编译并上传到开发板</li><li><strong>新建</strong>：创建一个新的空白项目（.ino文件）</li><li><strong>打开</strong>：打开已有的项目文件</li><li><strong>保存</strong>：保存当前项目</li><li><strong>串口监视器</strong>（右上角放大镜图标）：查看开发板发送的数据，调试程序</li></ul>
+        <h3>第一个测试程序：Blink（让板载LED闪烁）</h3>
+        <div class="code-block">
+// 初始化设置，只运行一次
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);  // 设置板载LED引脚为输出模式
+}
+// 主循环，重复运行
+void loop() {
+    digitalWrite(LED_BUILTIN, HIGH);  // 点亮LED
+    delay(1000);                      // 等待1秒
+    digitalWrite(LED_BUILTIN, LOW);   // 熄灭LED
+    delay(1000);                      // 等待1秒
+}
+        </div>
+        <h3>开发板与端口选择</h3>
+        <ul><li><strong>开发板选择</strong>：「工具」→「开发板」→「ESP32 Arduino」→选择你的ESP32型号（如ESP32 Dev Module）</li><li><strong>端口选择</strong>：「工具」→「端口」→选择正确的COM口（Windows）或/dev/cu.*（Mac）</li></ul>
+        <h2>🔌 步骤3：连接电路板与电脑，完成简单操作</h2>
+        <h3>硬件连接</h3>
+        <ol><li>使用USB数据线（通常是USB-A转USB-C或Micro-USB）连接ESP32开发板与电脑</li><li>观察开发板上的电源指示灯是否亮起</li><li>在Arduino IDE中检查端口是否识别到开发板</li></ol>
+        <h3>示例程序：点亮外部LED</h3>
+        <div class="code-block">
+int ledPin = 2;
+void setup() { pinMode(ledPin, OUTPUT); }
+void loop() { digitalWrite(ledPin, HIGH); delay(500); digitalWrite(ledPin, LOW); delay(500); }
+        </div>
+        <h3>示例程序：串口通信（发送"Hello World"）</h3>
+        <div class="code-block">
+void setup() { Serial.begin(115200); }
+void loop() { Serial.println("Hello World! 我是ESP32"); delay(1000); }
+        </div>
+        <div class="tip-box">
+            <strong>💡 常见问题与解决</strong><br>
+            - 找不到端口：检查USB线是否支持数据传输<br>
+            - 上传失败：按住ESP32板上的BOOT按钮再点击上传<br>
+            - 编译报错：检查开发板型号是否正确选择
+        </div>
+        <h2>📝 本周学习总结</h2>
+        <ul><li>✅ 成功安装Arduino IDE及ESP32支持包</li><li>✅ 熟悉Arduino IDE的基本操作界面和常用功能</li><li>✅ 学会编写简单的程序（LED闪烁、串口通信）</li><li>✅ 能够将程序上传到ESP32开发板并观察运行效果</li></ul>
+    </div>
+    <p><a href="index.html" style="color:#3498db;">← 返回主页</a></p>
+</body>
+</html>

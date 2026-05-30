@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第11周：学习激光切割2D设计</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f7fa;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #e67e22;
+            margin-top: 35px;
+            border-left: 5px solid #e67e22;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e67e22;
+            text-decoration: none;
+            background: #fef5e8;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .back-link:hover {
+            background: #e67e22;
+            color: white;
+        }
+        .step-box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #e67e22;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+        .tip-box {
+            background-color: #fef5e8;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #e67e22;
+            border-radius: 8px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        em {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .material-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .material-table th, .material-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .material-table th {
+            background-color: #fef5e8;
+            color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回主页</a>
+
+    <h1>🔥 第11周：学习激光切割2D设计</h1>
+    <p>本周我们学习了激光切割技术的基础知识，掌握了使用设计软件绘制2D图纸，并了解了激光切割的基本流程！</p>
+
+    <!-- 什么是激光切割 -->
+    <div class="step-box">
+        <h2>💡 一、什么是激光切割？</h2>
+        <p>激光切割是利用高功率密度的激光束照射在材料表面，使材料快速熔化、汽化或达到燃点，同时配合高速气流吹走熔融物质，从而实现材料切割的一种加工技术。</p>
+        <div class="tip-box">
+            💡 <strong>激光切割的优点：</strong>
+            <ul>
+                <li>✅ 精度高：切割精度可达0.1mm</li>
+                <li>✅ 速度快：比传统机械切割快10倍以上</li>
+                <li>✅ 切口光滑：无需二次加工</li>
+                <li>✅ 材料适应广：木材、亚克力、皮革、纸板等均可切割</li>
+                <li>✅ 无接触加工：减少材料变形</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 常用切割材料 -->
+    <div class="step-box">
+        <h2>📦 二、常用切割材料</h2>
+        <p>激光切割可以加工多种材料，以下是创客空间中最常用的几种：</p>
+        <table class="material-table">
+            <thead>
+                <tr><th>材料</th><th>特点</th><th>应用场景</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>椴木层板</td><td>价格便宜，切割效果好，有木纹质感</td><td>建筑模型、玩具、收纳盒</td></tr>
+                <tr><td>亚克力</td><td>透明度高，颜色丰富，可粘接</td><td>展示架、灯箱、外壳面板</td></tr>
+                <tr><td>中密度纤维板</td><td>表面平整，适合喷漆</td><td>模型底座、家具部件</td></tr>
+                <tr><td>皮革</td><td>柔韧性好，可弯曲</td><td>手工艺品、手机壳、钥匙扣</td></tr>
+                <tr><td>纸板/卡纸</td><td>成本极低，适合快速原型</td><td>概念验证、包装盒</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 设计软件介绍 -->
+    <div class="step-box">
+        <h2>🖥️ 三、设计软件推荐</h2>
+        <p>激光切割需要先用2D设计软件绘制图纸，然后导入激光切割软件设置参数。常用的设计软件有：</p>
+        <ul>
+            <li><strong>LaserMaker</strong>：国产免费激光切割软件，专为教育场景设计，内置大量教程和案例库，适合初学者使用</li>
+            <li><strong>LightBurn</strong>：功能强大的商业软件，支持多种激光切割机</li>
+            <li><strong>AutoCAD</strong>：专业的2D/3D设计软件，工程领域标准工具</li>
+            <li><strong>Fusion360（草图模式）</strong>：导出DXF格式，无缝衔接3D设计流程</li>
+            <li><strong>Inkscape</strong>：免费开源的矢量图软件，支持SVG格式导出</li>
+        </ul>
+        <p>本次课程我们使用的是<strong>LaserMaker</strong>，界面友好，对初学者非常友好！</p>
+    </div>
+
+    <!-- 设计流程 -->
+    <div class="step-box">
+        <h2>📐 四、激光切割2D设计流程</h2>
+        <p>一个完整的激光切割设计通常包含以下步骤：</p>
+        <ol>
+            <li><strong>确定设计需求</strong>：你要做什么？尺寸多大？用哪种材料？</li>
+            <li><strong>在软件中绘制2D图纸</strong>：使用矩形、圆形、直线等工具绘制外轮廓</li>
+            <li><strong>设计连接结构</strong>：加入插销孔、卡扣等结构，让零件能够组装</li>
+            <li><strong>图层设置与参数调整</strong>：区分切割（红色）和雕刻（黑色）图层</li>
+            <li><strong>模拟仿真</strong>：预览切割路径，检查是否有漏割</li>
+            <li><strong>导出文件</strong>：保存为激光切割机支持的格式</li>
+            <li><strong>实物切割与组装</strong>：在机器上设置材料厚度和功率，开始切割</li>
+        </ol>
+        <div class="tip-box">
+            💡 <strong>小技巧：</strong> 设计结构件时，记得考虑材料厚度！例如插销孔的宽度通常设计为材料厚度的0.9~1倍，这样可以保证紧配合。
+        </div>
+    </div>
+
+    <!-- 结构设计技巧 -->
+    <div class="step-box">
+        <h2>🔧 五、结构设计技巧</h2>
+        <p>激光切割最大的魅力在于：你可以设计出像积木一样可以拼接的结构！</p>
+        
+        <h3>📌 常用连接结构</h3>
+        <ul>
+            <li><strong>插销式连接</strong>：通过凸起和凹槽互相咬合，无需胶水</li>
+            <li><strong>层叠结构</strong>：多层板堆叠，用螺栓固定，可制作厚度较大的部件</li>
+            <li><strong>铰链结构</strong>：设计圆形卡槽，实现可转动的连接</li>
+            <li><strong>齿轮/传动结构</strong>：切割齿条和齿轮，可制作简单的机械传动机构</li>
+        </ul>
+        
+        <h3>📌 设计注意事项</h3>
+        <ul>
+            <li><strong>留出余量</strong>：激光束有一定的宽度（约0.2mm），设计时要考虑</li>
+            <li><strong>添加定位点</strong>：多零件时设计基准孔，方便后续对齐</li>
+            <li><strong>避免尖角</strong>：内角尽量设计成圆角，防止应力集中</li>
+            <li><strong>标注清晰</strong>：在图纸上标注关键尺寸，方便后续调整</li>
+        </ul>
+    </div>
+
+    <!-- 本周总结 -->
+    <div class="step-box">
+        <h2>📝 六、本周学习总结</h2>
+        <ul>
+            <li>✅ 了解了激光切割的基本原理和优点</li>
+            <li>✅ 认识了常用切割材料及其适用场景</li>
+            <li>✅ 掌握了激光切割2D设计的完整流程</li>
+            <li>✅ 学会了常用的结构设计技巧</li>
+            <li>✅ 为后续利用激光切割制作实物打下了基础</li>
+        </ul>
+    </div>
+
+    <p style="margin-top: 30px;"><a href="index.html" style="background:#e67e22; color:white; padding:10px 20px; border-radius:25px; text-decoration:none;">← 返回主页</a></p>
+</body>
+</html>

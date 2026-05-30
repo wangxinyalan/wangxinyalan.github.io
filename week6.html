@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第六周：WiFi控制舵机</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f0ff;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #9b59b6;
+            padding-bottom: 10px;
+        }
+        h2, h3 {
+            color: #8e44ad;
+            margin-top: 25px;
+        }
+        h2 {
+            border-left: 5px solid #9b59b6;
+            padding-left: 15px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #9b59b6;
+            text-decoration: none;
+            background: #f3e8ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .back-link:hover {
+            background: #9b59b6;
+            color: white;
+        }
+        .step-box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #9b59b6;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        video {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回主页</a>
+    <h1>📡 第六周：利用嵌入式开发完成WiFi控制舵机</h1>
+    <div class="step-box">
+        <h2>🛠️ 用到的元器件</h2>
+        <ul><li>ESP32-S2 Mini 开发板</li><li>SG90 舵机（或任意 3.3V/5V 舵机）</li><li>杜邦线（母对母，用于连接舵机和开发板）</li><li>USB 数据线（供电和上传程序）</li></ul>
+        <h2>📐 硬件接线说明</h2>
+        <ul><li><strong>舵机 VCC（红线）</strong> → ESP32-S2 Mini <strong>5V / VIN</strong> 引脚</li><li><strong>舵机 GND（棕线）</strong> → ESP32-S2 Mini <strong>GND</strong> 引脚</li><li><strong>舵机 信号线（橙线）</strong> → ESP32-S2 Mini <strong>GPIO 2</strong></li></ul>
+        <h2>💻 步骤1：编写 WiFi 控制舵机程序</h2>
+        <div class="code-block">
+#include &lt;WiFi.h&gt;
+#include &lt;ESP32Servo.h&gt;
+
+const char* ssid = "你的WiFi名称";
+const char* password = "你的WiFi密码";
+
+Servo myServo;
+int servoPin = 2;
+
+WiFiServer server(80);
+
+void setup() {
+  Serial.begin(115200);
+  myServo.attach(servoPin);
+  myServo.write(90);
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi 已连接");
+  Serial.print("IP 地址：");
+  Serial.println(WiFi.localIP());
+
+  server.begin();
+}
+
+void loop() {
+  WiFiClient client = server.available();
+  if (client) {
+    String request = client.readStringUntil('\r');
+    client.flush();
+
+    if (request.indexOf("GET /set?angle=") != -1) {
+      int start = request.indexOf("angle=") + 6;
+      int end = request.indexOf(" ", start);
+      String angleStr = request.substring(start, end);
+      int angle = angleStr.toInt();
+      angle = constrain(angle, 0, 180);
+      myServo.write(angle);
+      Serial.print("设置角度：");
+      Serial.println(angle);
+    }
+
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: text/html");
+    client.println("Connection: close");
+    client.println();
+    client.println("&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset='UTF-8'&gt;&lt;title&gt;舵机控制&lt;/title&gt;&lt;/head&gt;&lt;body&gt;");
+    client.println("&lt;h2&gt;WiFi 舵机控制面板&lt;/h2&gt;");
+    client.println("&lt;input type='range' min='0' max='180' value='90' id='angleSlider' oninput='updateAngle(this.value)'&gt;");
+    client.println("&lt;p&gt;当前角度：&lt;span id='angleValue'&gt;90&lt;/span&gt;°&lt;/p&gt;");
+    client.println("&lt;script&gt;function updateAngle(angle) { document.getElementById('angleValue').innerText = angle; fetch('/set?angle=' + angle); }&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;");
+  }
+  delay(10);
+}
+        </div>
+        <h2>📡 步骤2：上传程序并获取 IP 地址</h2>
+        <ol><li>用 USB 数据线连接 ESP32-S2 Mini 和电脑</li><li>在 Arduino IDE 中选择对应的开发板和端口</li><li>点击「上传」按钮，将程序烧录到开发板</li><li>打开「串口监视器」（波特率 115200），等待开发板连接 WiFi 后，会显示分配到的 IP 地址</li></ol>
+        <h2>🎥 步骤3：效果展示视频</h2>
+        <p><strong>视频1：硬件连接与初始测试</strong></p>
+        <video controls width="100%">
+            <source src="videos/servo_test1.mp4" type="video/mp4">
+            您的浏览器不支持 video 标签。
+        </video>
+        <p><strong>视频2：手机网页控制舵机旋转</strong></p>
+        <video controls width="100%">
+            <source src="videos/servo_test2.mp4" type="video/mp4">
+            您的浏览器不支持 video 标签。
+        </video>
+        <h2>📝 第六周总结</h2>
+        <ul><li>✅ 学习了如何用 ESP32-S2 Mini 控制舵机</li><li>✅ 实现了 WiFi 网页远程控制（局域网内）</li><li>✅ 掌握了简单的 HTML + JavaScript + Arduino 混合编程</li><li>✅ 为后续物联网项目打下基础</li></ul>
+    </div>
+    <p><a href="index.html" style="color:#9b59b6;">← 返回主页</a></p>
+</body>
+</html>
